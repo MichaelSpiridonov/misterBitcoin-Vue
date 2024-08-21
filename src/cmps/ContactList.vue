@@ -11,6 +11,11 @@
             <img src="@/assets/delete.png" /> <span>Delete</span>
           </button>
           <button><img src="@/assets/edit.png" /> <span>Edit</span></button>
+          <RouterLink :to="`/contact/${contact._id}`"
+            ><button>
+              <img src="@/assets/plus.png" /> <span>Details</span>
+            </button></RouterLink
+          >
         </section>
       </li>
     </ul>
@@ -46,14 +51,16 @@ export default {
   }
   li {
     display: flex;
+    .actions {
+      display: flex;
+    }
     &:hover {
-        padding-left: 15px;
-        opacity: 0.7;
-        border: 1px black solid;
-        transition: 500ms opacity;
-      }
+      padding-left: 15px;
+      opacity: 0.7;
+      border: 1px black solid;
+      transition: 500ms opacity;
+    }
     button {
-      text-align: center;
       display: flex;
       align-self: center;
       background: transparent;
@@ -73,9 +80,13 @@ export default {
         transition: 500ms opacity;
       }
       &:nth-last-child(1) {
-        padding-inline-end: 15px;
+        padding-inline-end: 5px;
       }
     }
+  }
+  a {
+    align-self: center;
+    text-decoration: none;
   }
 }
 </style>

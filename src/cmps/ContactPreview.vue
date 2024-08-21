@@ -1,6 +1,6 @@
 <template>
   <article class="contact-preview">
-    <img src="https://robohash.org/${contact._id}.png?set=set2" />
+    <img  :src="`https://robohash.org/${contact._id}.png?set=set2`" />
     <h1>{{ contact.name }}</h1>
   </article>
 </template>
@@ -25,10 +25,8 @@ export default {
     flex-grow: 1;
   }
   img {
+    align-self: center;
     height: 40px;
   }
-}
-.actions {
-  display: flex;
 }
 </style>
