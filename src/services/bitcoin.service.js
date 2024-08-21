@@ -23,9 +23,21 @@ async function getRate() {
 }
 
 async function getMarketPriceHistory() {
-
+    var marketHistory = await storageService.load(MARKET_HISTORY)
+    if (!marketHistory || !marketHistory.length){
+        const history = await axios.get(`https://api.blockchain.info/charts/market-price?timespan=5months&format=json&cors=true`)
+        marketHistory = history.data.values
+        storageService.save(MARKET_HISTORY, marketHistory)
+    } 
+    return marketHistory
 }
 
 async function getAvgBlockSize() {
-    
+    var avgBlock = await storageService.load(BLOCK_SIZE)
+    if (!avgBlock || !avgBlock.length){
+        const block = await axios.get(`https://api.blockchain.info/charts/avg-block-size?timespan=5months&format=json&cors=true`)
+        avgBlock = block.data.values
+        storageService.save(BLOCK_SIZE, avgBlock)
+    } 
+    return avgBlock
 }
