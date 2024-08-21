@@ -1,6 +1,6 @@
 const user = {
     name: "Puki Ben David",
-    balance: 100,
+    balance: 300,
     transactions: []
 }
 

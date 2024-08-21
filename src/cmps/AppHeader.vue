@@ -7,6 +7,7 @@
       <RouterLink to="/statistics">Statistics</RouterLink>
     </nav>
   </header>
+  <hr>
 </template>
 
 <script>
@@ -15,7 +16,6 @@ export default {}
 
 <style lang="scss">
 .app-header {
-  background-color: gray;
   display: flex;
   align-items: center;
 
