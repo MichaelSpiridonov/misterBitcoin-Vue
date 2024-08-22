@@ -1,5 +1,6 @@
 <template>
-  <Transition name="contact-edit">
+  <Transition name="modal">
+    <section class="contact-edit">
       <form
         v-if="contactToEdit"
         @submit.prevent="onSave"
@@ -23,6 +24,7 @@
         />
         <button :disabled="!isValid">Save</button>
       </form>
+    </section>
   </Transition>
 </template>
 
@@ -68,17 +70,18 @@ export default {
 </script>
 
 <style lang="scss">
-.modal-container {
+.contact-edit {
   position: fixed;
   z-index: 9998;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.5s ease;
 }
+
 .contact-edit-frm {
   height: 200px;
   width: 200px;
@@ -124,16 +127,16 @@ export default {
   }
 }
 
-.contact-edit-enter-from {
+.modal-enter-from {
   opacity: 0;
 }
 
-.contact-edit-leave-to {
+.modal-leave-to {
   opacity: 0;
 }
 
-.contact-edit-enter-from .contact-edit-frm,
-.contact-edit-leave-to .contact-edit-frm {
+.modal-enter-from .contact-edit-frm,
+.modal-leave-to .contact-edit-frm {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
