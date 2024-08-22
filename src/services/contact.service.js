@@ -127,7 +127,7 @@ const contacts = [
 ];
 
 function sort(arr) {
-    return arr.sort((a, b) => {
+    return arr.toSorted((a, b) => {
         if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) {
             return -1;
         }

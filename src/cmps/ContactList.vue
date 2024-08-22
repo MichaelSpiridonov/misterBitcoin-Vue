@@ -1,6 +1,9 @@
 <template>
   <section class="contact-list">
-    <ul>
+    <TransitionGroup
+      name="list"
+      tag="ul"
+    >
       <li
         v-for="contact in contacts"
         :key="contact._id"
@@ -10,7 +13,11 @@
           <button @click="onRemoveContact(contact._id)">
             <img src="@/assets/delete.png" /> <span>Delete</span>
           </button>
-          <button><img src="@/assets/edit.png" /> <span>Edit</span></button>
+          <RouterLink :to="`/contact/edit/${contact._id}`"
+            ><button>
+              <img src="@/assets/edit.png" /> <span>Edit</span>
+            </button></RouterLink
+          >
           <RouterLink :to="`/contact/${contact._id}`"
             ><button>
               <img src="@/assets/plus.png" /> <span>Details</span>
@@ -18,7 +25,7 @@
           >
         </section>
       </li>
-    </ul>
+    </TransitionGroup>
   </section>
 </template>
 
@@ -47,7 +54,32 @@ export default {
 .contact-list {
   ul {
     padding: 0;
-    list-style: none;
+    .list-move, /* apply transition to moving elements */
+    .list-enter-active,
+    .list-leave-active {
+      transition: all 1s ease;
+    }
+
+    .list-enter-from,
+    .list-leave-to {
+      .actions {
+        display: none;
+        &:hover {
+          display: none;
+        }
+      }
+      opacity: 0;
+      transform: translateX(30px);
+    }
+
+    /* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+    .list-leave-active {
+      .actions {
+        display: none;
+      }
+      position: absolute;
+    }
   }
   li {
     display: flex;

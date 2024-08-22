@@ -6,29 +6,18 @@
     :contacts="contacts"
   />
   <h1 v-else>No Contacts!</h1>
+  <RouterView />
 </template>
 
 <script>
 import ContactList from '@/cmps/ContactList.vue'
-import { contactService } from '@/services/contact.service'
 import { showErrorMsg, showSuccessMsg } from '@/services/eventBus.service'
 
 export default {
-  data() {
-    return {
-      contacts: null,
-    }
-  },
   methods: {
     async removeContact(contactId) {
       try {
-        await contactService.deleteContact(contactId)
-
-        const idx = this.contacts.findIndex(
-          (contact) => contact._id === contactId
-        )
-        this.contacts.splice(idx, 1)
-
+        await this.$store.dispatch({ type: 'removeContact', contactId })
         showSuccessMsg(`Removed contact ${contactId}`)
       } catch (err) {
         showErrorMsg('Something went wrong...')
@@ -36,7 +25,12 @@ export default {
     },
   },
   async created() {
-    this.contacts = await contactService.getContacts()
+    this.$store.dispatch({ type: 'loadContacts' })
+  },
+  computed: {
+    contacts() {
+      return this.$store.getters.contacts
+    },
   },
   components: {
     ContactList,
