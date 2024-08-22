@@ -56,41 +56,40 @@ export default {
     padding: 0;
     .list-move, /* apply transition to moving elements */
     .list-enter-active,
-    .list-leave-active {
+  .list-leave-active {
       transition: all 1s ease;
     }
 
     .list-enter-from,
     .list-leave-to {
+      opacity: 0;
+      transform: translateX(30px);
       .actions {
         display: none;
         &:hover {
           display: none;
         }
       }
-      opacity: 0;
-      transform: translateX(30px);
     }
 
     /* ensure leaving items are taken out of layout flow so that moving
    animations can be calculated correctly. */
     .list-leave-active {
+      position: absolute;
       .actions {
         display: none;
       }
-      position: absolute;
     }
   }
   li {
     display: flex;
-    .actions {
-      display: flex;
-    }
     &:hover {
-      padding-left: 15px;
       opacity: 0.7;
       border: 1px black solid;
       transition: 500ms opacity;
+    }
+    .actions {
+      display: flex;
     }
     button {
       display: flex;

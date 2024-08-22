@@ -14,27 +14,32 @@ const router = createRouter({
   routes: [{
       path: '/',
       name: 'Home',
-      component: Home
+      component: Home,
+      meta: { transition: 'slide' },
     },
     {
       path: '/contact',
       name: 'ContactIndex',
       component: ContactIndex,
+      meta: { transition: 'slide' },
       children: [{
         path: '/contact/edit/:id?',
         name: 'ContactEdit',
         component: ContactEdit,
+        meta: { transition: '' },
       }, ]
     },
     {
       path: '/contact/:id',
       name: 'ContactDetails',
-      component: ContactDetails
+      component: ContactDetails,
+      meta: { transition: 'slide' },
     },
     {
       path: '/statistics',
       name: 'Statistics',
-      component: Statistics
+      component: Statistics,
+      meta: { transition: 'slide' },
     },
   ]
 })

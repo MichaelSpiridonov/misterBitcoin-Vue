@@ -1,13 +1,22 @@
 <template>
-  <h1>Contacts</h1>
-  <ContactFilter />
-  <ContactList
-    v-if="contacts"
-    @remove="removeContact"
-    :contacts="contacts"
-  />
-  <h1 v-else>No Contacts!</h1>
-  <RouterView />
+  <section class="contact-index">
+    <h1>Contacts</h1>
+    <section class="actions">
+      <ContactFilter />
+      <RouterLink :to="`/contact/edit/`"
+        ><button class="add-button">
+          <img src="@/assets/plus.png" /> <span>Add Contact</span>
+        </button></RouterLink
+      >
+    </section>
+    <ContactList
+      v-if="contacts"
+      @remove="removeContact"
+      :contacts="contacts"
+    />
+    <h1 v-else>No Contacts!</h1>
+    <RouterView />
+  </section>
 </template>
 
 <script>
@@ -41,4 +50,36 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.contact-index {
+  a {
+    text-decoration: none
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .add-button {
+    display: flex;
+    align-self: center;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.81);
+    border: none;
+    gap: 5px;
+    img {
+      width: 20px;
+      height: 20px;
+    }
+    span {
+      align-self: center;
+    }
+    &:hover {
+      opacity: 0.5;
+      border: 2px black solid;
+      border-radius: 5px;
+      transition: 500ms opacity;
+    }
+  }
+}
+</style>
