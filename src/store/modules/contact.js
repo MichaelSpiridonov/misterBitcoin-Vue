@@ -18,9 +18,9 @@ export const contact = {
         },
     },
     actions: {
-        async loadContacts({ commit }) {
+        async loadContacts({ commit }, { filterBy }) {
             try {
-                const contacts = await contactService.getContacts()
+                const contacts = await contactService.getContacts(filterBy)
                 commit({ type: 'setContacts', contacts })
             } catch (err) {
                 console.log(err)                

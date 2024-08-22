@@ -87,6 +87,9 @@ export default {
   input {
       width: 200px;
       padding: 10px;
+      &:focus {
+            opacity: 0.7;
+        }
     }
 }
 </style>

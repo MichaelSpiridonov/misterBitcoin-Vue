@@ -1,5 +1,6 @@
 <template>
   <h1>Contacts</h1>
+  <ContactFilter />
   <ContactList
     v-if="contacts"
     @remove="removeContact"
@@ -11,6 +12,7 @@
 
 <script>
 import ContactList from '@/cmps/ContactList.vue'
+import ContactFilter from '@/cmps/ContactFilter.vue'
 import { showErrorMsg, showSuccessMsg } from '@/services/eventBus.service'
 
 export default {
@@ -34,6 +36,7 @@ export default {
   },
   components: {
     ContactList,
+    ContactFilter,
   },
 }
 </script>
