@@ -1,7 +1,21 @@
 <template>
-  <div v-if="chartData">
-    <LineChart :chart-data="chartData" :options="chartOptions" />
-  </div>
+  <section class="statistics">
+    <h1>Market Price History</h1>
+    <section class="charts">
+      <Line
+        v-if="chartData.labels && chartData.datasets[0].data"
+        id="my-chart-id"
+        :options="chartOptions"
+        :data="chartData"
+      />
+      <Line
+        v-if="avgBlockSizeData.labels && avgBlockSizeData.datasets[0].data"
+        id="my-chart-id"
+        :options="chartOptions"
+        :data="avgBlockSizeData"
+      />
+    </section>
+  </section>
 </template>
 
 <script>
@@ -27,66 +41,67 @@ ChartJS.register(
   LinearScale,
   PointElement
 )
-
 export default {
-  components: {
-    LineChart: Line,
-  },
+  name: 'LineChart',
+  components: { Line },
   data() {
     return {
       chartData: {
-        labels: [],
+        labels: null,
         datasets: [
           {
-            label: 'Bitcoin Price',
-            borderColor: '#42A5F5',
-            backgroundColor: 'rgba(66, 165, 245, 0.2)',
-            fill: true,
-            data: [],
+            label: 'Market Price History',
+            data: null,
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1,
+          },
+        ],
+      },
+      avgBlockSizeData: {
+        labels: null,
+        datasets: [
+          {
+            label: 'Market Avg Block History',
+            data: null,
+            fill: false,
+            borderColor: 'rgb(75, 192, 100)',
+            tension: 0.1,
           },
         ],
       },
       chartOptions: {
         responsive: true,
-        scales: {
-          x: {
-            type: 'time',
-            time: {
-              unit: 'day',
-              tooltipFormat: 'DD MMM YYYY',
-              displayFormats: {
-                day: 'DD MMM',
-              },
-            },
-            title: {
-              display: true,
-              text: 'Date',
-            },
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Price (USD)',
-            },
-          },
-        },
       },
-      isDataLoaded: false,
     }
   },
   async created() {
-    try {
-      const history = await bitcoinService.getMarketPriceHistory()
-      this.chartData.labels = history.map((item) => new Date(item.x * 1000).toISOString().split('T')[0])
-      this.chartData.datasets[0].data = history.map((item) => item.y)
-      this.isDataLoaded = true
-    } catch (error) {
-      console.error('Error fetching Bitcoin data:', error)
-    }
+    const history = await bitcoinService.getMarketPriceHistory()
+    const avgBlockSize = await bitcoinService.getAvgBlockSize()
+    this.avgBlockSizeData.labels = avgBlockSize.map(
+      (item) => new Date(item.x * 1000).toISOString().split('T')[0]
+    )
+    this.avgBlockSizeData.datasets[0].data = avgBlockSize.map((item) => item.y)
+
+    this.chartData.labels = history.map(
+      (item) => new Date(item.x * 1000).toISOString().split('T')[0]
+    )
+    this.chartData.datasets[0].data = history.map((item) => item.y)
+    console.log(this.chartData)
   },
 }
 </script>
 
-<style scoped>
-/* Add your component styles here */
+<style lang="scss">
+.statistics {
+  display: flex;
+  flex-direction: column;
+  .charts {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    width: 100%;
+    height: 100%;
+  }
+}
 </style>
